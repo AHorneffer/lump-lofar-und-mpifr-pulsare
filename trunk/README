@@ -1,0 +1,175 @@
+# README
+# README file for LuMP software
+
+INTRODUCTION
+____________
+
+This directory contains version 2.3.0 of the LuMP recording package.
+
+LuMP (LOFAR und MPIfR Pulsare) is a software package for recording
+beamformed data from LOFAR station in single-station mode.  The LuMP
+recording software is intended to be a minimalistic software package
+to handle basic reformatting and recording of LOFAR beamformed data.
+At the moment, the only significant processing incorporated in LuMP is
+the option to channelize and/or integrate data for some output
+formats.  As data processing is kept to a minimum, LuMP has relatively
+low requirements on CPU capacity.  However, recording the output data
+from a LOFAR station (approximately 100 MB/s per RSP lane, with 4 RSP
+lanes) may require significant sustained throughput capacity from the
+computer and storage device.
+
+LuMP v2.3.0 includes several new recording formats:
+
+    LuMP1:  pulsar recording format for processing with dspsr that can
+            output multiple beamlets per file
+    FFT0, PFB0:  discrete Fourier transform and polyphase filterbank
+            channelization of the LOFAR beamlet data
+    P_FFT0, P_PFB0:  power (as opposed to raw voltage) recording
+            formats using Fourier transform and polyphase filterbank
+            channelization
+
+LuMP v2.3.0 also includes a number of bugfixes from the v2.2 release.
+
+
+
+
+Downloading
+___________
+
+See the LuMP website at
+https://deki.mpifr-bonn.mpg.de/Cooperations/LOFAR/Software/LuMP
+
+
+
+
+
+Documentation
+-------------
+
+For information on how to use LuMP, there is no significant
+documentation yet outside of the --help options to the Python
+programs.  Check the LuMP webpage or contact the developer.
+
+
+For more information on LuMP, please visit the LuMP website at
+https://deki.mpifr-bonn.mpg.de/Cooperations/LOFAR/Software/LuMP
+
+For information about LOFAR, please visit
+http://www.astron.nl/radio-observatory/astronomers/lofar-astronomers
+
+For more information about the MPIfR, please visit
+http://www.mpifr-bonn.mpg.de/
+
+
+
+Installation
+____________
+
+Please see the INSTALL file for detailed information.
+
+
+
+
+
+
+Using LuMP
+__________
+
+Please see the LuMP website at
+https://deki.mpifr-bonn.mpg.de/Cooperations/LOFAR/Software/LuMP
+
+
+
+
+
+
+
+
+
+
+Licensing
+_________
+
+Please see the file COPYING for detailed copyright information.
+
+LuMP is free software (see the file COPYING).  Users are encouraged to
+reference the latest refereed publication documenting LuMP (journal
+article in progress as of 2014-09-23).  There is no compulsion to
+include the developer(s) as co-authors on publications from using LuMP
+after 2014-09-23, but feel fre to contact me(us) if you would like to
+do so.  If you have feature requests, please let me know.  Significant
+development work might be possible to purchase through co-authorship.
+Actual money might get even faster results.  :)
+
+
+
+
+
+
+
+
+
+Contacts
+________
+
+To contact the LuMP development team, send an e-mail to
+anderson@gfz-potsdam.de
+
+
+
+
+
+
+
+Bugs
+____
+
+For a list of known bugs, or for information on how to report
+suspected bugs, see the file BUGS.
+
+
+
+
+News
+____
+
+See the file NEWS.
+
+
+
+ChangeLog
+_________
+
+See the file ChangeLog.
+
+
+
+
+
+
+
+
+
+###############################################################################
+#_HIST  DATE NAME PLACE INFO
+# 2013 Sep 22  James M. Anderson  --- MPIfR start
+# 2014 Sep 23  JMA  --- update for LuMP 2.3.0
+
+
+# Copyright (c) 2014, James M. Anderson <anderson@gfz-potsdam.de>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+################################################################################

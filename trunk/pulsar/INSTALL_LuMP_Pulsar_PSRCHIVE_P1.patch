@@ -1,0 +1,36 @@
+# INSTALL_LuMP_Pulsar_PSRCHIVE_P1.patch
+# patch file 1 for PSRCHIVE
+# 2014 Oct 08  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the PSRCHIVE software in this patch is presumably covered by a 
+# different copyright.  See http://psrchive.sourceforge.net/
+# for more information about PSRCHIVE copyright issues.
+#
+################################################################################
+diff -Naur psrchive/configure psrchive_new/configure
+--- psrchive/configure	2014-10-08 07:37:11.850301701 +0200
++++ psrchive_new/configure	2014-10-08 07:45:12.424742193 +0200
+@@ -21598,6 +21598,8 @@
+ 
+     FFTW_LIBS="$fftw3_LIBS $FFTW_LIBS"
+     FFTW_CFLAGS="$fftw3_CFLAGS $FFTW_CFLAGS"
++    ac_save_LIBS="$LIBS"
++    LIBS="$FFTW_LIBS $ac_save_LIBS"
+   fi
+ 
+ 

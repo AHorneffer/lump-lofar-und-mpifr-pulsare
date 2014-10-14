@@ -1,0 +1,56 @@
+LOFAR_und_MPIfR_Pulsare (LuMP) Software
+Copyright 2011--2014 James M. Anderson <anderson@gfz-potsdam.de>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+This product includes software developed at
+The Max-Planck-Institut für Radioastronomie
+(http:/www/mpifr-bonn.mpg.de) and the Deutsches GeoForschungs Zentrum
+(GFZ) Potsdam (http://www.gfz-potsdam.de).
+
+This product also includes patch file instructions for altering
+software for other free software products that may be used in
+conjuction with this software.  These products include:
+
+    ATLAS (see http://math-atlas.sourceforge.net/)
+
+    casacore (see https://code.google.com/p/casacore/)
+
+    cmake (see http://www.cmake.org/)
+
+    dspsr (see http://dspsr.sourceforge.net/index.shtml)
+
+    PGPLOT (see http://www.astro.caltech.edu/~tjp/pgplot/)
+
+    PRESTO (see http://www.cv.nrao.edu/~sransom/presto/)
+
+    PSRCAT (see http://www.atnf.csiro.au/people/pulsar/psrcat/)
+
+    psrchive (see http://psrchive.sourceforge.net/)
+
+    PSRDADA (see http://psrdada.sourceforge.net/)
+
+    PsrXML (see http://www.pulsarastronomy.net/wiki/Software/PsrXML)
+
+    sigproc (see http://sigproc.sourceforge.net/)
+
+    SOFA (see http://www.iausofa.org/)
+
+    TEMPO2 (see http://sourceforge.net/projects/tempo2/)
+
+See the appropriate web pages listed above for information about the
+copyright information associated with these packages.  Additional
+copyright restrictions apply to the patch files provided in this
+product.
+

@@ -1,0 +1,36 @@
+# INSTALL_LuMP_Pulsar_PSRCHIVE_P1.patch
+# patch file 3 for PSRCHIVE
+# 2014 Oct 08  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the PSRCHIVE software in this patch is presumably covered by a 
+# different copyright.  See http://psrchive.sourceforge.net/
+# for more information about PSRCHIVE copyright issues.
+#
+################################################################################
+diff -Naur psrchive/Util/fft/install_bench psrchive_new/Util/fft/install_bench
+--- psrchive/Util/fft/install_bench	2014-10-08 09:27:32.394056096 +0200
++++ psrchive_new/Util/fft/install_bench	2014-10-08 09:52:29.258136823 +0200
+@@ -65,7 +65,7 @@
+ 
+     mv fft_bench.out ${datarootdir}/fft_bench_${lib}_${nthread}.dat
+ 
+-    @ nthread = $nthread * 2
++    @ nthread = $nthread + 1
+ 
+   end
+ 

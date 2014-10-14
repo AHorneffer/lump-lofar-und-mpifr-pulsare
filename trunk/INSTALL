@@ -1,0 +1,292 @@
+# INSTALL
+# INSTALL file for LuMP software
+################################################################################
+
+The file    INSTALL_LOFAR.bat    contains  bash shell instructions for
+installing the LuMP software, and the major package dependencies for
+running LuMP.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################
+# System and Software Requirements
+################################################################################
+
+LuMP has been developed and tested on Linux systems.  Recent versions
+of (open) SuSE, Ubuntu, and Debian are known to work.
+
+
+The following software packages are needed to build some of the
+components of LuMP.  If the additional pulsar software tools are not
+built, then *some* of these packages wil not be required.  Please use
+your system's package installation system to install the packages on
+your computer.
+
+GNU autotools (autoconf, automake, GNU m4, autogen, aclocal,
+               libtool, libtoolize, autoconf, autoheader, ...)
+flex
+awk
+GNU binutils
+gzip           (including header files)
+bzip2          (including header files)
+lzip
+zip
+GNU make
+GNU tar
+Perl 5.6.1 or later
+zip and unzip
+TCL (8.6.1 or later preferred)
+texinfo
+tex
+svn
+cvs
+git
+ssh
+GNU difutils
+patch
+readline
+bison
+libopenssl (and development stuff)
+crypt library (and development stuff, for example, libgcrypt)
+libxml (and development stuff)
+termcap
+swig
+python (2.7)
+numpy
+gsl (and development stuff, gnu scientific library)
+hdf (and development stuff)
+hdf5 (and development stuff)
+cmake
+boost (C++ libraries/header files)
+readline (library and development stuff)
+doxygen
+java
+gcc, g++, gcj, gfortran (at least version 4.7 is recommended, unless
+                         you instruct LuMP to install these tools
+                         itself, in which case you only need a
+                         compiler than can be used to bootstrap the
+                         gcc software suite) 
+
+
+# not required, as PULSARHUNTER does not build properly
+openjdk (and development stuff)
+
+
+
+
+
+
+
+
+To build gcc, g++, gfortran, and gcj, you will need:
+    C++98 compiler
+    C standard library and headers (plus kernel headers)
+    guile
+    GMP (GNU Multiple Precision) and development files (headers)
+    expect and expect development files
+    dejagnu
+
+
+
+    
+
+
+
+
+################################################################################
+# Installing LuMP
+################################################################################
+
+The LuMP software currently installs itself within its existing source
+tree structure.   If you are a developer, you are encouraged to make a
+copy of the LuMP tree and build from that copy.  By default, LuMP uses
+compiler options that instruct gcc to build the software for the exact
+processor type that is in the machine used to compile LuMP.  This
+generally enables the best performance possible for the machine used
+for compilation, including the level of SSE, SSE2, and so on
+instruction set support that the computer recognizes.  Therefore, it
+is recommended that LuMP be built and installed separately for each
+computer that will be used as a LuMP recording computer at your site.  
+
+Assuming that you have a local copy of LuMP, to begin the installation
+process, cd into the main directory (where this INSTALL file is
+located). 
+
+Then, run
+
+./make_setup.py --help
+
+Look at the available options.  As of LuMP version 2.3, the main ones
+of interest are:
+
+    --build_gcc :  This option tells LuMP to install gcc 4.9.1 and to
+      use that compiler to build the LuMP software.  This will require
+      a few gigabytes of hard drive space, as the gcc suite is quite
+      large.  However, the latest gcc versions have extra support for
+      newer x86_64 architectures, plus better SIMD support, and can
+      offser substantial speed improvements over older versions (4.4,
+      4.6, ...).
+
+    --build_pulsar_dspsr :  This option tells LuMP to install online
+      open-source software from the pulsar community that is needed
+      and/or useful to have a version of dspsr installed for
+      performing analysis of known pulsars.  The development versions
+      of the pulsar packages such as psrchive and dspsr are required
+      to support LuMP --- the current stable versions will work to
+      support the LuMP data format.  If you do not intend to perform
+      pulsar analysis with dspsr or related tools, do not turn this
+      option on.
+
+    --build_pulsar_search : This option instructs LuMP to install some
+      additional open-source pulsar software packages to support
+      searching for pulsars in LOFAR beamformed data.
+
+As LuMP is intended to be a recording system for LOFAR data, all of
+the related software that may be used in the recording process will be
+built and installed within the main LuMP directory (lump).  The goal
+is to have a stable software package that can be installed and sed for
+many years, always operating in exactly the same way, so that, for
+example, no timing offsets are introduced by using different software
+versions.  For many applications, the guarantee that the software runs
+in the same way for all observations over many years is important.
+Therefore, all realted software will be installed within the LuMP
+tree, so that by setting up the LuMP environment variables for
+recording data, the same software is always used.  Additional
+installations of (pulsar) software by users that incorporate feature
+enhancements will not affect the operation of this particular LuMP
+installation (depending on how you set up your PATH environment
+variable...).
+
+The open-source pulsar software that LuMP can install can be very
+picky about how it gets installed.  Scripts for downloading and
+installing this external pulsar software are provided, but are not
+guaranteed to work properly on the variety of different Linux flavors
+and versions in existence.  If the pulsar software fails to install,
+then have a look at the installation scripts to see what is going on.
+The LuMP developers have no to limited amounts of time to help you
+figure things out if you have problems.  Of course, if you have
+suggestions for improving the pulsar installation software, please
+contact the LuMP developers.
+
+Once you have decided which software you want to install (gcc, dspsr,
+and/or possible pulsar search software), then run the make_setup.py
+again without the --help option.  For example,
+
+./make_setup.py --build_gcc --build_pulsar_dspsr
+
+Then build and install the software by running
+
+make
+make install
+
+This will optionally install the gcc compiler suite, then install
+local versions of the FFTW3 software optimized for the machine
+architecture of the machine used to compile LuMP, then install the
+optional external pulsar software packages, and finally install the
+LuMP recording software itself.
+
+
+
+
+
+
+
+################################################################################
+# Using LuMP
+################################################################################
+
+During the build process,, two shell script files will be produced in
+the main LuMP directory (where this INSTALL file is located).  These
+files have the filenames SETUP.csh and SETUP.sh, for (t)csh and sh
+(and derivatives such as bash) shells, respectively.  In order to use
+LuMP software, you need to be running one of the supported shells.
+(Note that although the sh shell should in principle work, only the
+bash shell has actually been used in actual testing.)  Source either
+the SETUP.csh or the SETUP.sh, depending on which shell you are using,
+prior to running LuMP software.  If you have a user account dedicated
+to LOFAR beamformed observing, you may wish to have the source command
+inserted into the standard shell startup files in the home directory
+(for example, the .tchsrc or the .bashrc file).  Prior to sourcing the
+LuMP setup file, you should set up environment variables to tell the
+LuMP scripts to set up the extra pulsar software, if you wish to use
+the installed LuMP pulsar software.  If you want to use LuMP's version
+of dspsr, then set the variable USE_LUMP_PULSAR_STUFF to some
+non-blank value.  If you also want to use the pulsar seach software,
+then set the USE_LUMP_PULSAR_SEARCH variable to some non-blank value.
+
+For example, in bash you could do
+
+USE_LUMP_PULSAR_STUFF=T
+USE_LUMP_PULSAR_SEARCH=T
+export USE_LUMP_PULSAR_STUFF
+export USE_LUMP_PULSAR_SEARCH
+
+and in csh you could do
+
+setenv USE_LUMP_PULSAR_STUFF T
+setenv USE_LUMP_PULSAR_SEARCH T
+
+
+Then, source the LuMP setup file.  For example, you could do
+
+. /some/path/to/lump/lump/SETUP.sh
+
+to source the SETUP.sh file in bash, where /some/path/to/lump/lump
+above is the full path to the main lump directory.  For csh do
+
+source /some/path/to/lump/lump/SETUP.csh
+
+For help on using the LuMP software, see the doc directory of LuMP in
+future releases of LuMP as the documentation is improved.  In the
+meantime, have a look at 
+
+https://deki.mpifr-bonn.mpg.de/Cooperations/LOFAR/Software/LuMP
+
+and
+
+https://deki.mpifr-bonn.mpg.de/Cooperations/LOFAR/Software/LuMP/LuMP_version_2.0
+
+
+
+
+
+
+
+
+
+################################################################################
+#_HIST  DATE NAME PLACE INFO
+# 2013 Sep 22  James M. Anderson  --- MPIfR start
+# 2014 Sep 23  JMA  --- update e-mail address
+# 2014 Oct 14  JMA  --- update install instructions
+
+# Copyright (c) 2013, 2014, James M. Anderson <anderson@gfz-potsdam.de>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+################################################################################
+
+

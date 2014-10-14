@@ -1,0 +1,52 @@
+# INSTALL_LuMP_Pulsar_ATLAS_P0.patch
+# patch file 0 for ATLAS
+# 2014 Oct 02  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the ATLAS software in this patch is presumably covered by a different
+# copyright.  See http://math-atlas.sourceforge.net/
+# for more information about ATLAS copyright issues.
+#
+################################################################################
+diff -Naur ATLAS3.11.30/CONFIG/src/backend/archinfo_linux.c ATLAS3.11.30_new/CONFIG/src/backend/archinfo_linux.c
+--- ATLAS3.11.30/CONFIG/src/backend/archinfo_linux.c	2014-10-02 11:55:10.790713034 +0200
++++ ATLAS3.11.30_new/CONFIG/src/backend/archinfo_linux.c	2014-10-02 11:59:00.032028127 +0200
+@@ -378,6 +378,12 @@
+    res = atlsys_1L(NULL,
+                    "cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq",
+                    0, 0);
++   if(res==NULL)
++   {
++      res = atlsys_1L(NULL,
++                      "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
++                      0, 0);
++   }
+    if (res)
+    {
+       imax = GetFirstInt(res);
+@@ -389,6 +395,11 @@
+       free(res);
+       res = atlsys_1L(NULL,
+             "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", 0, 0);
++      if(res==NULL)
++      {
++         res = atlsys_1L(NULL,
++                         "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq", 0, 0);
++      }
+       assert(res);
+       icur = GetFirstInt(res);
+       free(res);

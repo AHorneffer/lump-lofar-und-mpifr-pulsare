@@ -1,0 +1,25 @@
+Notes on downloading ATLAS:
+
+As of 2014-09-26, the SourceForge web area still has ATLAS 3.10 listed
+as the "Stable" version.  However, looking in the documentation, you
+will see that the ATLAS developers consider version 3.10 to be
+hopelessly out of date, and you should try to install the latest
+"Developer" version (3.11.??) and get that working instead.  As of
+this time, version 3.11.30 is available.
+
+Downloading the tarball versions from SourceForge seems to require
+that you browse with a web browser.  So, I have attempted to start a
+web browser to open the correct starting web page for you.  If that
+has not worked, then point a browser yourself manually to
+
+http://math-atlas.sourceforge.net/
+
+
+From there, navigate to the "Software" section.  Click on the
+"Developer (unstable)" link.  Then click on the 3.11.30 link.  Then
+click on the atlas3.11.30.tar.bz2 link.  Save the file to your hard
+drive, and move it to the directory indicated in the message text on
+the terminal you were using to install LuMP.  Then close this editor
+session.  LuMP will then check that you have installed the correct
+file at the correct directory.
+
