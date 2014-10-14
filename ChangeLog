@@ -1,0 +1,154 @@
+2014-10-14  James Anderson  <anderson@gfz-potsdam>
+
+	* INSTALL: update install instructions
+
+	* pulsar/*.patch*: Generate patch files that fix problems when
+	installing LuMP on a SuSE 13.1 system.  Hopefully the patches also
+	work reasonably well for other systems too.
+
+	* lump/src/lump/LOFAR_Station_Beamformed_VDIF_Packet_LOFAR0.h: 
+	* lump/src/lump/LOFAR_Station_Beamformed_Writer_VDIF0.h: 
+	* lump/src/lump/LOFAR_Station_Beamformed_VDIF_Packet_LOFAR0.cxx: 
+	* lump/src/lump/LOFAR_Station_Beamformed_Writer_VDIF0.cxx: change
+	the VDIF extended data header format to write out the 4 bit value
+	of the VDIF writer type instead of the revision number of the LuMP
+	version number (major.minor.revision).
+
+2014-09-28  James M Anderson  <anderson@gfz-potsdam>
+
+	* fftw/Makefile: update for new install system
+
+	* gcc/Makefile: update for new INSTALL script
+
+2014-09-27  James M Anderson  <anderson@gfz-potsdam>
+
+	* cpu/Linux/cpu_speed.sh: enable cpufreq-set commands
+
+	* lump/SETUP.csh: 
+	* lump/SETUP.sh: 
+	* make_setup.py: 
+	* pulsar/SETUP.sh: 
+	* pulsar/SETUP.csh: some programs want LIBRARY_PATH instead of
+	LD_LIBRARY_PATH
+
+	* pulsar/Makefile: convert to new batch file system
+
+	* pulsar/INSTALL_LuMP_Pulsar_DSPSR.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_PULSARHUNTER.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_SIGPROC.bat: 
+	create from original big install script
+
+2014-09-26  James Anderson  <anderson@gfz-potsdam>
+
+	* pulsar/INSTALL_LuMP_Pulsar_PRESTO.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_LOFARDAL.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_CASACORE.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_WCSLIB.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_PSRCHIVE.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_PSRCAT.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_TEMPO2.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_ATLAS.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_TEMPO.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_PGPLOT.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_SOFA.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_CFITSIO.bat: 
+	* pulsar/INSTALL_LuMP_Pulsar_common.sh: 
+	create from original big install script
+
+	* lump/INSTALL_LuMP_LuMP.bat: force reasing setup commands from
+	fixed (not relative) path
+
+2014-09-25  James Anderson  <anderson@gfz-potsdam>
+
+	* pulsar/SETUP.sh:
+	* pulsar/SETUP.csh: 
+	add history area and copyright, update for LuMP 2.3
+
+	* pulsar/INSTALL_LuMP_Pulsar.bat: 
+	* lump/INSTALL_LuMP_LuMP.bat: 
+	* gcc/INSTALL_LuMP_GCC.bat: 
+	* fftw/INSTALL_LuMP_FFTW.bat: 
+	* Makefile: 
+	* doc/Makefile: 
+	* lump/src/lump/Makefile: 
+	* fftw/Makefile: 
+	* gcc/Makefile: 
+	add history area and copyright
+
+	* lump/src/lump/MPIfR_FFTW3_default_wisdom.sh: new bash script to
+	handle CPU speed settings before and after FFTW3 wisdome
+	generation for LuMP
+
+	* lump/src/lump/Makefile: new make_wisdom target
+
+	* cpu/Linux/cpu_speed.sh: made on 2014 Sep 24, include in system today
+
+	* lump/src/lump/MPIfR_FFTW3_default_wisdom.py: 
+	change num_threads option to default to checking
+        how many CPU cores are present, change default max
+        channels to 32
+
+2014-09-24  James Anderson  <anderson@gfz-potsdam>
+
+	* ChangeLog: add copyright, add note about how to update in emacs
+
+	* README: update copyright info
+
+	* NEWS: update copyright info
+
+2014-09-23, 14  James Anderson  <anderson@gfz-potsdam>
+
+	* AUTHORS: update e-mail address
+
+	* COPYING: update e-mail address
+
+	* INSTALL: update e-mail address
+
+	* NEWS: updated for LuMP 2.3.0
+
+	* README: updated for LuMP 2.3.0, removed request for co-authorship
+
+	* THANKS: updated e-mail address
+
+	* VERSION: updated for LuMP 2.3.0
+
+2013-09-22  James M. Anderson  <anderson@mpifr-bonn.mpg.de>
+
+	* BUGS: created
+
+	* VERSION: created
+
+	* THANKS: created
+
+	* README: created
+
+	* NEWS: created
+
+	* INSTALL: created
+
+	* AUTHORS: created
+
+	* COPYING: created
+
+# In emacs, use C-x 4 a in a file to add an entry to the ChangeLog file
+
+
+################################################################################
+
+# Copyright (c) 2014, James M. Anderson <anderson@gfz-potsdam.de>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+################################################################################

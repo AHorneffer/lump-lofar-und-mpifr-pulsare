@@ -1,0 +1,47 @@
+# INSTALL_LuMP_Pulsar_DSPSR_P1.patch
+# patch file 1 for DSPSR
+# 2014 Oct 14  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the DSPSR software in this patch is presumably covered by a 
+# different copyright.  See http://dspsr.sourceforge.net/index.shtml
+# for more information about DSPSR copyright issues.
+#
+################################################################################
+diff -Naur dspsr/Signal/General/the_decimator.C dspsr_new/Signal/General/the_decimator.C
+--- dspsr/Signal/General/the_decimator.C	2014-10-14 05:11:50.235417843 +0200
++++ dspsr_new/Signal/General/the_decimator.C	2014-10-14 05:50:09.087040898 +0200
+@@ -520,7 +520,8 @@
+           psrxml_header->receiver.hasCircularFeeds = timeseries->get_basis() == Signal::Circular;
+           psrxml_header->receiver.feedRightHanded = 0; // @todo
+           psrxml_header->receiver.numberOfPolarisations = 2;
+-          psrxml_header->receiver.feedSymmetry = 0; // @todo
++          // Spelling error in psrxml library, should be fixed in newer versions
++          psrxml_header->receiver.feedSymetry = 0; // @todo
+           psrxml_header->receiver.calXYPhase = 0; //@todo
+  
+           psrxml_header->receiverBeamNumber = 0;//@todo
+@@ -538,7 +539,8 @@
+ 
+           strcpy(psrxml_header->telescope.name,timeseries->get_telescope().c_str());
+           psrxml_header->telescope.longitude = 0;//@todo
+-          psrxml_header->telescope.latitude=0;//@todo
++          // Spelling error in psrxml library, should be fixed in newer versions
++          psrxml_header->telescope.lattitude=0;//@todo
+           psrxml_header->telescope.zenithLimit=0;//@todo
+           psrxml_header->telescope.x=0;//@todo
+           psrxml_header->telescope.y=0;//@todo

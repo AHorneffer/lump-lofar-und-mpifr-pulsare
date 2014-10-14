@@ -1,0 +1,67 @@
+# INSTALL_LuMP_Pulsar_PSRXML_P0.patch
+# patch file 0 for PSRXML
+# 2014 Oct 07  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the PSRXML software in this patch is presumably covered by a different
+# copyright.  See http://www.pulsarastronomy.net/wiki/Software/PsrXML
+# for more information about PSRXML copyright issues.
+#
+################################################################################
+diff -Naur psrxml/psrxml-master/autoconf/crypto.m4 psrxml_new/psrxml-master/autoconf/crypto.m4
+--- psrxml/psrxml-master/autoconf/crypto.m4	2009-05-28 07:12:15.000000000 +0200
++++ psrxml_new/psrxml-master/autoconf/crypto.m4	2014-10-07 08:57:50.325083844 +0200
+@@ -5,7 +5,7 @@
+ 	AC_CHECK_LIB([crypto],[SHA1],have_openssl=yes, have_openssl=no)
+ 	AM_CONDITIONAL(HAVE_OPENSSL, [test x"$have_openssl" = xyes])
+ 	if test x"$have_openssl" = xyes; then
+-		OPENSSL_LIBS="-lcrypto"
++		OPENSSL_LIBS="-lcrypt -lcrypto -lssl"
+ 		AC_SUBST(OPENSSL_LIBS)
+ 		echo "Using openssl for SHA checksums."
+ 	fi
+diff -Naur psrxml/psrxml-master/configure.in psrxml_new/psrxml-master/configure.in
+--- psrxml/psrxml-master/configure.in	2009-05-28 07:12:15.000000000 +0200
++++ psrxml_new/psrxml-master/configure.in	2014-10-07 08:56:59.745470400 +0200
+@@ -10,6 +10,8 @@
+ 
+ SWIN_OPTIONS_SET
+ 
++AC_CONFIG_MACRO_DIR([autoconf])
++LT_INIT
+ #AC_CONFIG_SRCDIR([Makefile.am])
+ # Create static libraries by default
+ AC_DISABLE_SHARED
+diff -Naur psrxml/psrxml-master/src/psrxml/psrxml.h psrxml_new/psrxml-master/src/psrxml/psrxml.h
+--- psrxml/psrxml-master/src/psrxml/psrxml.h	2009-05-28 07:12:15.000000000 +0200
++++ psrxml_new/psrxml-master/src/psrxml/psrxml.h	2014-10-07 09:02:09.154091927 +0200
+@@ -1,5 +1,6 @@
+ #ifndef PSRXML_H_
+ #define PSRXML_H_
++#include "config.h"
+ 
+ #ifndef NAN
+ #define NAN (0.0/0.0)
+diff -Naur psrxml/psrxml-master/src/psrxml/psrxml_unpackers.c psrxml_new/psrxml-master/src/psrxml/psrxml_unpackers.c
+--- psrxml/psrxml-master/src/psrxml/psrxml_unpackers.c	2009-05-28 07:12:15.000000000 +0200
++++ psrxml_new/psrxml-master/src/psrxml/psrxml_unpackers.c	2014-10-07 09:01:08.410560998 +0200
+@@ -1,4 +1,5 @@
+ #include <psrxml.h>
++#include "unpack_lookup.h"
+ 
+ enum endianness endian() {
+     int i = 1;

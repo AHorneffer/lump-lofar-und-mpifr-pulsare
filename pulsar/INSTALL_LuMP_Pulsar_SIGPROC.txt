@@ -1,0 +1,18 @@
+Notes on downloading SIGPROC:
+
+Downloading the tarball versions from SourceForge seems to require
+that you browse with a web browser.  So, I have attempted to start a
+web browser to open the correct starting web page for you.  If that
+has not worked, then point a browser yourself manually to
+
+http://sigproc.sourceforge.net/
+
+
+From there, scroll down to the "Installng SIGPROC" area.  Click on the
+"here" link in "Download the latest version of SIGPROC here".  The
+sigproc-4.3.tar.gz file should then be available for download.  Save
+the file to your hard drive, and move it to the directory indicated in
+the message text on the terminal you were using to install LuMP.  Then
+close this editor session.  LuMP will then check that you have
+installed the correct file at the correct directory.
+

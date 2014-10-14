@@ -1,0 +1,108 @@
+# INSTALL_LuMP_Pulsar_PGPLOT_P1.patch
+# patch file 0 for PGPLOT
+# 2014 Oct 02  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the PGPLOT software in this patch is presumably covered by a different
+# copyright.  See http://www.astro.caltech.edu/~tjp/pgplot/
+# for more information about PGPLOT copyright issues.
+#
+################################################################################
+diff -Naur pgplot/drivers/mfdriv.f pgplot_new/drivers/mfdriv.f
+--- pgplot/drivers/mfdriv.f	1994-08-29 19:32:54.000000000 +0200
++++ pgplot_new/drivers/mfdriv.f	2014-10-02 10:44:06.441547315 +0200
+@@ -47,7 +47,7 @@
+ C-----------------------------------------------------------------------
+       LOGICAL    CONT
+       INTEGER*2  BUFFER(360), COMBUF(5), I0, I1, IB, IC, IG, IR, J0, J1
+-      INTEGER*2  LASTI, LASTJ, NPICT, NPTS
++      INTEGER*2  LASTI, LASTJ, NPICT, NPTS, TEMP(1)
+       INTEGER*4  HW, IER, LUN, REMCAL
+       REAL*4     RATIO, SCALE, XMAX, YMAX
+       CHARACTER  MSG*10
+@@ -156,9 +156,9 @@
+          RBUF(1) = LUN
+       END IF
+ C                                      Open the output file.
+-      OPEN (UNIT = LUN, FILE = CHR(:LCHR), CARRIAGECONTROL = 'NONE',
+-     1      DEFAULTFILE = DEFNAM, DISPOSE = 'DELETE', STATUS = 'NEW',
+-     2      RECL = 180, FORM = 'UNFORMATTED', RECORDTYPE = 'FIXED', 
++      OPEN (UNIT = LUN, FILE = CHR(:LCHR), ACCESS='DIRECT',
++     1      STATUS = 'NEW',
++     2      RECL = 180, FORM = 'UNFORMATTED', 
+      3      IOSTAT = IER)
+ C                                      Check for an error and cleanup if
+ C                                      one occurred.
+@@ -194,11 +194,12 @@
+ C
+   100 CONTINUE
+ C                                      Send the END_METAFILE command.
+-      CALL GRMF01 (1, '8100'X, BUFFER, LUN, HW)
++      TEMP(1) = '8100'X
++      CALL GRMF01 (1, TEMP, BUFFER, LUN, HW)
+ C                                      Flush the buffer.
+       CALL GRMF02 (LUN, HW, BUFFER)
+ C                                      Close the file.
+-      CLOSE (LUN, DISPOSE = 'KEEP')
++      CLOSE (LUN, STATUS = 'KEEP')
+ C                                      Deallocate the logical unit.
+       CALL GRFLUN (LUN)
+ C
+@@ -304,7 +305,8 @@
+ C
+   140 CONTINUE
+ C                                      Send a END_PICTURE command.
+-      CALL GRMF01 (1, '9100'X, BUFFER, LUN, HW)
++      TEMP(1) = '9100'X
++      CALL GRMF01 (1, TEMP, BUFFER, LUN, HW)
+       RETURN
+ C
+ C--- IFUNC = 15, Select color index ------------------------------------
+diff -Naur pgplot/drivers/xtk/tkpgplot.c pgplot_new/drivers/xtk/tkpgplot.c
+--- pgplot/drivers/xtk/tkpgplot.c	2000-12-13 03:16:28.000000000 +0100
++++ pgplot_new/drivers/xtk/tkpgplot.c	2014-10-02 10:42:37.589128618 +0200
+@@ -2136,7 +2136,8 @@
+     tkpg->border = bd;
+     tkpg_draw_3d_border(tkpg);
+   } else {
+-    fprintf(stderr, "Tk_Get3DBorder failed: %s\n", tkpg->interp->result);
++    /* fprintf(stderr, "Tk_Get3DBorder failed: %s\n", tkpg->interp->result); */
++    fprintf(stderr, "Tk_Get3DBorder failed: No error message available\n");
+   };
+ }
+ 
+diff -Naur pgplot/makefile pgplot_new/makefile
+--- pgplot/makefile	2014-10-02 10:48:02.044004752 +0200
++++ pgplot_new/makefile	2014-10-02 10:44:06.441547315 +0200
+@@ -48,7 +48,7 @@
+ LIBS=-L/usr/X11R6/lib -lX11
+ MOTIF_LIBS=-lXm -lXt -L/usr/X11R6/lib -lX11
+ ATHENA_LIBS=-lXaw -lXt -lXmu -lXext -L/usr/X11R6/lib -lX11
+-TK_LIBS=-L/usr/lib -ltk -ltcl -L/usr/X11R6/lib -lX11 -ldl
++TK_LIBS=-L/usr/lib -L/usr/lib64 $(TCLTKLIBS) -L/usr/X11R6/lib -lX11 -ldl
+ #
+ #	Loader command for PGPLOT library
+ #
+@@ -897,7 +897,7 @@
+ grivas.o : $(DRVDIR)/gadef.h
+ grtv00.o : $(DRVDIR)/imdef.h
+ pgxwin.o : $(DRVDIR)/pgxwin.h
+-pndriv.o : ./png.h ./pngconf.h ./zlib.h ./zconf.h
++pndriv.o : 
+ 
+ x2driv.o figdisp_comm.o: $(DRVDIR)/commands.h
+ 

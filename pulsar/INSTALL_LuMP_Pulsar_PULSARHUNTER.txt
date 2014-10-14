@@ -1,0 +1,16 @@
+Notes on downloading TEMPO2:
+
+Downloading the tarball versions from SourceForge seems to require
+that you browse with a web browser.  So, I have attempted to start a
+web browser to open the correct starting web page for you.  If that
+has not worked, then point a browser yourself manually to
+
+http://sourceforge.net/projects/pulsarhunter/files/
+
+
+Click on the "Download pulsarhunter_v1.3r63.tar.gz (12.0 MB)" link.
+Save the file to your hard drive, and move it to the directory
+indicated in the message text on the terminal you were using to
+install LuMP.  Then close this editor session.  LuMP will then check
+that you have installed the correct file at the correct directory.
+

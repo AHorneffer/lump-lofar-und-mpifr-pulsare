@@ -1,0 +1,143 @@
+# NEWS
+# news information for LuMP
+#_HIST  DATE NAME PLACE INFO
+# 2013 Sep 22  James M Anderson  --- MPIfR start
+# 2014 Sep 23  JMA  --- GFZ update for LuMP 2.3.0
+
+################################################################################
+
+
+
+
+
+
+
+# 2014 Sep 23  JMA  --- LuMP v2.3.0
+This version fixes some bugs from the previous version (including the
+bug that Stefan reported about a week ago --- fixed in my version for
+several months now).  A full ChangeLog is still in progress.  However,
+here is a list of major subsystems:
+
+*** Pulsar recording: There are no significant changes here, except
+    for minor bug fixes that have not affected the data actually going
+    into dspsr.  The system still supports outputting subbands to disk
+    separately (LuMP0), groups of subbands to disk (LuMP1), and piping
+    the data directly into dspsr with no storage to disk (LuMP2).
+
+*** VDIF: a new writing mode has been enabled for writing out the
+    LOFAR beamformed data in the VLBI Data Interchange Format (VDIF),
+    so that correlating GLOW data with something like DiFX should be
+    made a bit easier.  (DiFX will still need to be modified to
+    understand the exact form of VDIF that I have implemented, as
+    LOFAR beamformed data break some of the rules of the VDIF format
+    requirements, but...)
+
+*** Channelization: Multiple modes for performing channelization and
+    optionally to convert the voltage data to power and integrate over
+    arbitrary lengths of time have been enabled and tested (as far as
+    I can without access to a real datastream).  Both FFT and PFB
+    implementations are available (you probably want the PFB
+    implementation to deal with RFI leakage), with a huge assortment
+    of weighting functions to choose from for both.  On my 4 core
+    i5-2500K system at home (computer from 2011), I can generate 16
+    channels per subband for all subbands in a LOFAR station lane (1/4
+    of the whole station) in faster than real time for both the 16 and
+    8 bit modes for the PFB integrating to power mode.  Processing 244
+    subbands for the 4 bit mode takes about 15% longer than the length
+    of time of the input data on my home computer, so it is also close
+    to being realtime.  For the lofarBN and lofarCN machines at the
+    MPIfR, there should be no problem in being able to keep up with
+    realtime for the 4 bit mode with 16 channels per subband.  As the
+    lofarAN machines are a bit older but have more cores, I cannot
+    predict whether or not they will be able to keep up.  The
+    channelization output modes of LuMP might be interesting for the
+    Solar group to get the resolution they want for single station
+    observations, as my version of LuMP can easily do << 100 kHz
+    frequency resolution and 1 ms integration times.  Other options
+    (looking for carbon lines, ...) might be possible too.
+
+
+
+
+
+
+
+# 2013 Sep 22  JMA  --- LuMP v2.0 alpha
+
+LuMP is now in its v2.0 alpha release stage.
+
+New features in v2.0:
+
+    New recording formats:
+
+        LuMP1:  pulsar recording format for processing with dspsr that can
+                output multiple beamlets per file
+        FFT0:   discrete Fourier transform channelization of LOFAR beamlet data
+        PFB0:   polyphase filterbank channelization of LOFAR beamlet data
+        P_FFT0: power (as opposed to raw voltage) recording
+            	format using Fourier transform channelization
+        P_PFB0: power (as opposed to raw voltage) recording
+            	format using polyphase filterbank channelization
+
+    The logging system has been extensively modified
+
+    Each beamlet may be assigned a separate RCUMODE value, as opposed
+    to LuMP v1.0 which assumed that all beamlets had the same
+    RCUMODE.  This allows multiple RCUMODEs to be recorded
+    simultaneously (such as the LOFAR 357 mode).
+
+    Pointing directions and epoch information for each beamlet are now
+    provided to the program, and recorded for output formats that
+    support them.
+
+
+Bugfixes in v2.0:
+
+    The reference epoch was off by 1.0 seconds (exactly) in LuMP v1.0
+    when LuMP was started on an odd second using the 200 MHz sampling
+    mode of the LOFAR station.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################
+
+# Copyright (c) 2014, James M. Anderson <anderson@gfz-potsdam.de>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+################################################################################

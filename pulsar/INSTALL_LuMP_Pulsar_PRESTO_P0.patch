@@ -1,0 +1,84 @@
+# INSTALL_LuMP_Pulsar_PRESTO_P0.patch
+# patch file 0 for PRESTO
+# 2014 Oct 11  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the PRESTO software in this patch is presumably covered by a 
+# different copyright.  See http://www.cv.nrao.edu/~sransom/presto/
+# for more information about PRESTO copyright issues.
+#
+################################################################################
+diff -Naur presto/python/Makefile presto_new/python/Makefile
+--- presto/python/Makefile	2014-10-11 14:36:27.604428851 +0200
++++ presto_new/python/Makefile	2014-10-11 15:36:07.564053735 +0200
+@@ -1,5 +1,5 @@
+ build:
+-	python setup.py install --home=${PRESTO}
++	python setup.py install --home=${PRESTO} --prefix=""
+ 
+ fftfit:
+ 	cd fftfit_src ; f2py -c fftfit.pyf *.f
+diff -Naur presto/python/setup.py presto_new/python/setup.py
+--- presto/python/setup.py	2014-10-11 14:36:27.608428823 +0200
++++ presto_new/python/setup.py	2014-10-11 15:35:01.725497864 +0200
+@@ -16,10 +16,10 @@
+ # Note:  you might need to add "gfortran" to the following list if 
+ # you see errors relating to missing "g" functions....
+ ppgplot_libraries = ["cpgplot", "pgplot", "X11", "png", "m"]
+-ppgplot_library_dirs = ["/usr/X11R6/lib"]
++ppgplot_library_dirs = [os.environ["XLIBDIR"]]
+ 
+ presto_libraries = ["presto", "fftw3f", "m"]
+-presto_library_dirs = []
++presto_library_dirs = [os.environ["MYFFTWDIR"]+"/lib64"]
+ 
+ # Use NumPy instead of Numeric or numarray
+ make_extension = Extension
+diff -Naur presto/src/Makefile presto_new/src/Makefile
+--- presto/src/Makefile	2014-10-11 14:36:27.609428816 +0200
++++ presto_new/src/Makefile	2014-10-11 15:38:53.298937690 +0200
+@@ -40,18 +40,18 @@
+ PRESTOLINK = $(CFITSIOLINK) -L$(PRESTO)/lib -lpresto $(FFTLINK)
+ 
+ CC = gcc
+-FC = gfortran
++FC = gfortran $(MY_EXTRA_FFLAGS) -fPIC
+ #FC = g77
+ # Very recent Intel CPUs might see a few percent speedup using -mavx
+ CFLAGS = -I$(PRESTO)/include $(GLIBINC) $(CFITSIOINC) $(PGPLOTINC) $(FFTINC) \
+ 	-DUSEFFTW -DUSEMMAP -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 \
+-	-g -O3 -ffast-math -Wall -W -fPIC
++	-O3 -ffast-math -Wall -W -fPIC $(MY_EXTRA_CFLAGS)
+ #	-g -Wall -W -fPIC
+ CLINKFLAGS = $(CFLAGS)
+ # NOTE:  Be careful of upping the optimization on the
+ #        FFLAGs.  Certain compilers (i.e. on Intel Macs) will
+ #        cause errors for the code in least_squares.f
+-FFLAGS = -g -fPIC
++FFLAGS = -fPIC
+ FLINKFLAGS = $(FFLAGS)
+ LINKCOMMAND1 = $(CC) $(LIBCMD) -o
+ LINKCOMMAND2 = ar rcs
+@@ -129,7 +129,7 @@
+ 
+ slalib: libsla$(LIBSUFFIX)
+ 	cd slalib ; $(FC) -o sla_test sla_test.f -fno-second-underscore -L$(PRESTO)/lib -lsla
+-	slalib/sla_test
++	bash (LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(PRESTO)/lib;export LD_LIBRARY_PATH;slalib/sla_test)
+ 
+ libsla$(LIBSUFFIX):
+ 	cd slalib ; $(FC) $(FFLAGS) -fno-second-underscore -c -I. *.f *.F

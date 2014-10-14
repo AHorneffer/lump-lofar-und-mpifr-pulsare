@@ -1,0 +1,41 @@
+# INSTALL_LuMP_Pulsar_TEMPO2_P1.patch
+# patch file 1 for TEMPO2
+# 2014 Oct 06  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the SOFA software in this patch is presumably covered by a different
+# copyright.  See http://sourceforge.net/projects/tempo2/
+# for more information about TEMPO2 copyright issues.
+#
+################################################################################
+diff -Naur tempo2-2013.9.1/libtool tempo2-2013.9.1_new/libtool
+--- tempo2-2013.9.1/libtool	2014-10-06 19:45:05.633114234 +0200
++++ tempo2-2013.9.1_new/libtool	2014-10-06 19:57:52.278327980 +0200
+@@ -6625,7 +6625,12 @@
+ 	    searchdirs="$newlib_search_path $lib_search_path $sys_lib_search_path $shlib_search_path"
+ 	  fi
+ 	  for searchdir in $searchdirs; do
+-	    for search_ext in .la $std_shrext .so .a; do
++            MY_SEARCH_LIST=".la $std_shrext .so .a"
++	    if [ "${name}" = "fftw3" ]; then
++	      MY_SEARCH_LIST="$std_shrext .la .so .a"
++	    fi
++	    #for search_ext in .la $std_shrext .so .a; do
++	    for search_ext in ${MY_SEARCH_LIST}; do
+ 	      # Search the libtool library
+ 	      lib="$searchdir/lib${name}${search_ext}"
+ 	      if test -f "$lib"; then

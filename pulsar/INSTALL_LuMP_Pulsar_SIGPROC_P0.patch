@@ -1,0 +1,812 @@
+# INSTALL_LuMP_Pulsar_SIGPROC_P0.patch
+# patch file 0 for SIGPROC
+# 2014 Oct 11  James Anderson  --- GFZ start
+#
+# Copyright (c) 2014 James M. Anderson <anderson@gfz-potsdam.de>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# Note that the SIGPROC software in this patch is presumably covered by a 
+# different copyright.  See http://sigproc.sourceforge.net/
+# for more information about SIGPROC copyright issues.
+#
+################################################################################
+diff -Naur sigproc-4.3/bandfactors.c sigproc-4.3_new/bandfactors.c
+--- sigproc-4.3/bandfactors.c	2003-10-23 15:37:55.000000000 +0200
++++ sigproc-4.3_new/bandfactors.c	2013-07-26 23:54:35.000000000 +0200
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include "sigproc.h"
+ double *bandfactors(int nchans) /*includefile*/
+ {
+diff -Naur sigproc-4.3/chan_freqs.c sigproc-4.3_new/chan_freqs.c
+--- sigproc-4.3/chan_freqs.c	2005-01-04 14:31:47.000000000 +0100
++++ sigproc-4.3_new/chan_freqs.c	2013-07-27 00:12:57.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <stdio.h>
+ /* 
+    return a pointer to an array of filterbank channel frequencies given the
+diff -Naur sigproc-4.3/chaninfo.f sigproc-4.3_new/chaninfo.f
+--- sigproc-4.3/chaninfo.f	2006-04-07 12:34:29.000000000 +0200
++++ sigproc-4.3_new/chaninfo.f	2013-07-27 16:20:51.000000000 +0200
+@@ -69,7 +69,8 @@
+ c read the header for useful info
+ 	lf=index(fname,' ')-1
+ 	hdrfname=fname(1:lf-4)//'.hdr'
+-	open(unit=11,file=hdrfname,status='old',form='unformatted',err=991)
++	open(unit=11,file=hdrfname,status='old',form='unformatted',
++	1    err=991)
+ 	read(11,err=992)hdr
+ 	close(11)
+ 	read(hdr(222:224),'(i3)',err=992)nchans
+diff -Naur sigproc-4.3/deg2dms.c sigproc-4.3_new/deg2dms.c
+--- sigproc-4.3/deg2dms.c	2005-03-24 18:38:54.000000000 +0100
++++ sigproc-4.3_new/deg2dms.c	2013-07-27 00:03:14.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ double deg2dms(double angle) /*includefile*/
+ {
+   int deg,min;
+diff -Naur sigproc-4.3/dosearch.f sigproc-4.3_new/dosearch.f
+--- sigproc-4.3/dosearch.f	2007-08-31 00:46:53.000000000 +0200
++++ sigproc-4.3_new/dosearch.f	2013-07-27 00:04:00.000000000 +0200
+@@ -262,7 +262,7 @@
+          write(llog,*) 'Lyne-Ashworth harmonic summing'
+          call oldsumhrm(samp,npf,nf1) ! Lyne-Ashworth code
+       else
+-         write(llog,*) 'DB\'s slow-but-simple harmonic summing routine'
++         write(llog,*) 'DB''s slow-but-simple harmonic summing routine'
+          call sumhrm(samp,npf,nf1)    ! David Barnes code
+       endif
+ c      
+diff -Naur sigproc-4.3/error_message.c sigproc-4.3_new/error_message.c
+--- sigproc-4.3/error_message.c	2003-10-23 15:37:55.000000000 +0200
++++ sigproc-4.3_new/error_message.c	2013-07-27 00:13:56.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <stdio.h>
+ void error_message(char *message) /*includefile */
+ {
+diff -Naur sigproc-4.3/fetch_hdrval.c sigproc-4.3_new/fetch_hdrval.c
+--- sigproc-4.3/fetch_hdrval.c	2005-07-15 16:23:13.000000000 +0200
++++ sigproc-4.3_new/fetch_hdrval.c	2013-07-27 00:14:27.000000000 +0200
+@@ -4,6 +4,7 @@
+ #include <math.h>
+ #include "wapp_header.h"
+ #include "key.h"
++#include "sigproc.h"
+ 
+ struct WAPP_HEADER head;
+ /*--------------------------------------------------------------*
+diff -Naur sigproc-4.3/fshift_prof.c sigproc-4.3_new/fshift_prof.c
+--- sigproc-4.3/fshift_prof.c	2005-01-10 18:16:26.000000000 +0100
++++ sigproc-4.3_new/fshift_prof.c	2013-07-27 00:15:00.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <stdio.h>
+ #include <math.h>
+ #define NMAX 8192  /* Need a 2-d array */
+diff -Naur sigproc-4.3/head_parse.c sigproc-4.3_new/head_parse.c
+--- sigproc-4.3/head_parse.c	2005-07-15 16:27:55.000000000 +0200
++++ sigproc-4.3_new/head_parse.c	2013-07-27 16:10:20.000000000 +0200
+@@ -1,4 +1,4 @@
+-
++#include "sigproc.h"
+ int wapp_incfile_length;
+ #include <stdio.h>
+ #include <fcntl.h>
+diff -Naur sigproc-4.3/include.csh sigproc-4.3_new/include.csh
+--- sigproc-4.3/include.csh	2007-03-08 17:58:44.000000000 +0100
++++ sigproc-4.3_new/include.csh	2013-07-27 00:13:30.000000000 +0200
+@@ -3,6 +3,10 @@
+ set v = `awk '{print $1}' version.history | tail -2 | head -1`
+ cat << END1   >! sigproc.h
+ /* sigproc.h: Automatically generated include file for sigproc-$v */
++#include <stdio.h>
++#include <stdlib.h>
++#include <math.h>
++#include <string.h>
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -Naur sigproc-4.3/makefile sigproc-4.3_new/makefile
+--- sigproc-4.3/makefile	2007-08-31 16:18:20.000000000 +0200
++++ sigproc-4.3_new/makefile	2013-07-26 23:58:24.000000000 +0200
+@@ -8,155 +8,156 @@
+ ###############################################################################
+ LIB = libsigproc_$(OSTYPE).a
+ LIBOBJECTS = \
+-$(LIB)(add_channels.o)\
+-$(LIB)(add_samples.o)\
+-$(LIB)(aliases.o)\
+-$(LIB)(angle_split.o)\
+-$(LIB)(aoftm.o)\
+-$(LIB)(bandfactors.o)\
+-$(LIB)(baseline.o)\
+-$(LIB)(bit.o)\
+-$(LIB)(bpp2fb.o)\
+-$(LIB)(cel2gal.o)\
+-$(LIB)(chan_freqs.o)\
+-$(LIB)(clock.o)\
+-$(LIB)(close_log.o)\
+-$(LIB)(cpower.o)\
+-$(LIB)(cprofc.o)\
+-$(LIB)(decimate_data.o)\
+-$(LIB)(decimate_header.o)\
+-$(LIB)(dedisperse_data.o)\
+-$(LIB)(dedisperse_header.o)\
+-$(LIB)(deg2dms.o)\
+-$(LIB)(dialog.o)\
+-$(LIB)(dmdelay.o)\
+-$(LIB)(dmshift.o)\
+-$(LIB)(dosearch.o)\
+-$(LIB)(epnpack.o)\
+-$(LIB)(eraseDP.o)\
+-$(LIB)(error_message.o)\
+-$(LIB)(fast_mean.o)\
+-$(LIB)(fetch_hdrval.o)\
+-$(LIB)(ffft.o)\
+-$(LIB)(ffreq.o)\
+-$(LIB)(fftdata.o)\
+-$(LIB)($(FFTWF))\
+-$(LIB)(file_exists.o)\
+-$(LIB)(filterbank_header.o)\
+-$(LIB)(find_norm.o)\
+-$(LIB)(fold_data.o)\
+-$(LIB)(fold_header.o)\
+-$(LIB)(formspec.o)\
+-$(LIB)(freq.o)\
+-$(LIB)(fshift_prof.o)\
+-$(LIB)(getddis.o)\
+-$(LIB)(getfast_rmea.o)\
+-$(LIB)(getmeanrms.o)\
+-$(LIB)(getmjd.o)\
+-$(LIB)(getrmea.o)\
+-$(LIB)(getrrms.o)\
+-$(LIB)(glun.o)\
+-$(LIB)(gmrt2fb.o)\
+-$(LIB)(help.o)\
+-$(LIB)(histmax.o)\
+-$(LIB)(ignored_channels.o)\
+-$(LIB)(indexxf77.o)\
+-$(LIB)(indexx.o)\
+-$(LIB)(inv_cerf.o)\
+-$(LIB)(length.o)\
+-$(LIB)(lookup.o)\
+-$(LIB)(machine2prf.o)\
+-$(LIB)(meanrms.o)\
+-$(LIB)(minmax.o)\
+-$(LIB)(mjd.o)\
+-$(LIB)(mmzap.o)\
+-$(LIB)(normal.o)\
+-$(LIB)(norm_prof.o)\
+-$(LIB)(np2.o)\
+-$(LIB)(nrselect.o)\
+-$(LIB)(nrsort.o)\
+-$(LIB)(nrutil.o)\
+-$(LIB)(nsamples.o)\
+-$(LIB)(ooty2fb.o)\
+-$(LIB)(open_file.o)\
+-$(LIB)(open_files.o)\
+-$(LIB)(open_log.o)\
+-$(LIB)(pack_unpack.o)\
+-$(LIB)(phcalc.o)\
+-$(LIB)(print_version.o)\
+-$(LIB)(process.o)\
+-$(LIB)(prof_adds.o)\
+-$(LIB)(prof_ddis.o)\
+-$(LIB)(prof_sbas.o)\
+-$(LIB)(prof_sumc.o)\
+-$(LIB)(prof_sumifs.o)\
+-$(LIB)(pspm2fb.o)\
+-$(LIB)(pspm_decode.o)\
+-$(LIB)(pspm_prof.o)\
+-$(LIB)(pspm_tstart.o)\
+-$(LIB)(pulsar2k2fb.o)\
+-$(LIB)(pulse.o)\
+-$(LIB)(put.o)\
+-$(LIB)(quikgray.o)\
+-$(LIB)(ralphs_mean.o)\
+-$(LIB)(random.o)\
+-$(LIB)(rdfbtab.o)\
+-$(LIB)(rdhead.o)\
+-$(LIB)(read_aoscan.o)\
+-$(LIB)(read_block.o)\
+-$(LIB)(readdat.o)\
+-$(LIB)(read_header.o)\
+-$(LIB)(read_polyco.o)\
+-$(LIB)(readspec.o)\
+-$(LIB)(readsus.o)\
+-$(LIB)(readtim.o)\
+-$(LIB)(rebin.o)\
+-$(LIB)(recipes.o)\
+-$(LIB)(recon_prof.o)\
+-$(LIB)(resample.o)\
+-$(LIB)(rotate_time.o)\
+-$(LIB)(rwepn.o)\
+-$(LIB)(scaledata.o)\
+-$(LIB)(scale_prof.o)\
+-$(LIB)(scamp2fb.o)\
+-$(LIB)(seekin.o)\
+-$(LIB)(select.o)\
+-$(LIB)(send_stuff.o)\
+-$(LIB)(shift_prof.o)\
+-$(LIB)(short.o)\
+-$(LIB)(single_ch.o)\
+-$(LIB)(singlepulse.o)\
+-$(LIB)(sizeof_file.o)\
+-$(LIB)(slalib.o)\
+-$(LIB)(slfit.o)\
+-$(LIB)(smooth.o)\
+-$(LIB)(spcsnr.o)\
+-$(LIB)(sprof.o)\
+-$(LIB)(ssm.o)\
+-$(LIB)(strings_equal.o)\
+-$(LIB)(submean.o)\
+-$(LIB)(submedian.o)\
+-$(LIB)(sumhrm.o)\
+-$(LIB)(swap_bytes.o)\
+-$(LIB)(thresh_1d.o)\
+-$(LIB)(timer.o)\
+-$(LIB)(typeof_inputdata.o)\
+-$(LIB)(update_log.o)\
+-$(LIB)(uttime.o)\
+-$(LIB)(vanvleck.o)\
+-$(LIB)(vmax.o)\
+-$(LIB)(vmin.o)\
+-$(LIB)(wappcorrect.o)\
+-$(LIB)(wapp_prof.o)\
+-$(LIB)(whiten.o)\
+-$(LIB)(write_epn.o)\
+-$(LIB)(writeepn.o)\
+-$(LIB)(write_profiles.o)\
+-$(LIB)(write_pulses.o)\
+-$(LIB)(writespec.o)\
+-$(LIB)(y.tab.o)\
+-$(LIB)(zap_birdies.o)\
+-$(LIB)(zapit.o)
++	add_channels.o \
++	add_samples.o \
++	aliases.o \
++	angle_split.o \
++	aoftm.o \
++	bandfactors.o \
++	baseline.o \
++	bit.o \
++	bpp2fb.o \
++	cel2gal.o \
++	chan_freqs.o \
++	clock.o \
++	close_log.o \
++	cpower.o \
++	cprofc.o \
++	decimate_data.o \
++	decimate_header.o \
++	dedisperse_data.o \
++	dedisperse_header.o \
++	deg2dms.o \
++	dialog.o \
++	dmdelay.o \
++	dmshift.o \
++	dosearch.o \
++	epnpack.o \
++	eraseDP.o \
++	error_message.o \
++	fast_mean.o \
++	fetch_hdrval.o \
++	ffft.o \
++	ffreq.o \
++	fftdata.o \
++	$(FFTWF) \
++	file_exists.o \
++	filterbank_header.o \
++	find_norm.o \
++	fold_data.o \
++	fold_header.o \
++	formspec.o \
++	freq.o \
++	fshift_prof.o \
++	getddis.o \
++	getfast_rmea.o \
++	getmeanrms.o \
++	getmjd.o \
++	getrmea.o \
++	getrrms.o \
++	glun.o \
++	gmrt2fb.o \
++	help.o \
++	histmax.o \
++	ignored_channels.o \
++	indexxf77.o \
++	indexx.o \
++	inv_cerf.o \
++	length.o \
++	lookup.o \
++	machine2prf.o \
++	meanrms.o \
++	minmax.o \
++	mjd.o \
++	mmzap.o \
++	normal.o \
++	norm_prof.o \
++	np2.o \
++	nrselect.o \
++	nrsort.o \
++	nrutil.o \
++	nsamples.o \
++	ooty2fb.o \
++	open_file.o \
++	open_files.o \
++	open_log.o \
++	pack_unpack.o \
++	phcalc.o \
++	print_version.o \
++	process.o \
++	prof_adds.o \
++	prof_ddis.o \
++	prof_sbas.o \
++	prof_sumc.o \
++	prof_sumifs.o \
++	pspm2fb.o \
++	pspm_decode.o \
++	pspm_prof.o \
++	pspm_tstart.o \
++	pulsar2k2fb.o \
++	pulse.o \
++	put.o \
++	quikgray.o \
++	ralphs_mean.o \
++	random.o \
++	rdfbtab.o \
++	rdhead.o \
++	read_aoscan.o \
++	read_block.o \
++	readdat.o \
++	read_header.o \
++	read_polyco.o \
++	readspec.o \
++	readsus.o \
++	readtim.o \
++	rebin.o \
++	recipes.o \
++	recon_prof.o \
++	resample.o \
++	rotate_time.o \
++	rwepn.o \
++	scaledata.o \
++	scale_prof.o \
++	scamp2fb.o \
++	seekin.o \
++	select.o \
++	send_stuff.o \
++	shift_prof.o \
++	short.o \
++	single_ch.o \
++	singlepulse.o \
++	sizeof_file.o \
++	slalib.o \
++	slfit.o \
++	smooth.o \
++	spcsnr.o \
++	sprof.o \
++	ssm.o \
++	strings_equal.o \
++	submean.o \
++	submedian.o \
++	sumhrm.o \
++	swap_bytes.o \
++	thresh_1d.o \
++	timer.o \
++	typeof_inputdata.o \
++	update_log.o \
++	uttime.o \
++	vanvleck.o \
++	vmax.o \
++	vmin.o \
++	wappcorrect.o \
++	wapp_prof.o \
++	whiten.o \
++	write_epn.o \
++	writeepn.o \
++	write_profiles.o \
++	write_pulses.o \
++	writespec.o \
++	y.tab.o \
++	zap_birdies.o \
++	zapit.o
++
+ ###############################################################################
+ all: library programs scripts 
+ 
+@@ -171,6 +172,7 @@
+ 	./include.csh
+ 
+ library : sigproc.h $(LIBOBJECTS)
++	$(AR) -crv $(LIB) $(LIBOBJECTS)
+ 
+ filterbank  : filterbank.o head_parse.o wapp2fb.o library 
+ 	$(CC) -o $(BIN)/filterbank filterbank.o  $(LIB) $(LFFTW) -lm
+@@ -190,23 +192,23 @@
+ 
+ tune  : tune.o library
+ 	$(CC)  -c tune.c 
+-	$(F77) -o $(BIN)/tune tune.o $(LIB) -lm $(LFITS) $(LPGPLOT)
++	$(F77) -o $(BIN)/tune tune.o $(LIB) $(LFITS) $(LPGPLOT) -lm
+ 	rm -f tune.o
+ flatten  : flatten.o library 
+-	$(CC) -o $(BIN)/flatten flatten.o  $(LIB) -lm $(LFITS)
++	$(CC) -o $(BIN)/flatten flatten.o  $(LIB) $(LFITS) -lm
+ 	rm -f flatten.o
+- 
++
+ clip  : clip.o library 
+-	$(CC) -o $(BIN)/clip clip.o  $(LIB) -lm $(LFITS)
++	$(CC) -o $(BIN)/clip clip.o  $(LIB) $(LFITS) -lm
+ 	rm -f clip.o
+ downsample  : downsample.o library 
+-	$(CC) -o $(BIN)/downsample downsample.o  $(LIB) -lm $(LFITS)
++	$(CC) -o $(BIN)/downsample downsample.o  $(LIB) $(LFITS) -lm
+ 	rm -f downsample.o
+ 
+ 
+ 
+ fold  : fold.o library 
+-	$(CC) -o $(BIN)/fold fold.o  $(LIB) -lm $(LFITS)
++	$(CC) -o $(BIN)/fold fold.o  $(LIB) $(LFITS) -lm
+ 	rm -f fold.o
+ 
+ profile  : profile.o library 
+@@ -254,7 +256,7 @@
+ 	rm -f dice.o
+ 
+ depolyco  : depolyco.o library 
+-	$(CC) -o $(BIN)/depolyco depolyco.o $(LIB) -lm  $(LFITS) $(LFFTW)
++	$(CC) -o $(BIN)/depolyco depolyco.o $(LIB)  $(LFITS) $(LFFTW) -lm
+ 	rm -f depolyco.o
+ 
+ blanker  : blanker.o library 
+@@ -274,19 +276,19 @@
+ 	rm -f giant.o
+ 
+ barycentre  : barycentre.o library 
+-	$(CC) -o $(BIN)/barycentre barycentre.o $(LIB) -lm  $(LFITS) $(LFFTW)
++	$(CC) -o $(BIN)/barycentre barycentre.o $(LIB)  $(LFITS) $(LFFTW) -lm
+ 	rm -f barycentre.o
+ 
+ dedisperse  : dedisperse.o library
+-	$(CC) -o $(BIN)/dedisperse dedisperse.o $(LIB) -lm $(SUNLM)
++	$(CC) -o $(BIN)/dedisperse dedisperse.o $(LIB) $(SUNLM) -lm
+ 	rm -f dedisperse.o
+ 
+ tree  : tree.o library
+-	$(CC) -o $(BIN)/tree tree.o $(LIB) -lm $(SUNLM)
++	$(CC) -o $(BIN)/tree tree.o $(LIB) $(SUNLM) -lm
+ 	rm -f tree.o
+ 
+ polyco2period  : polyco2period.o library
+-	$(CC) -o $(BIN)/polyco2period polyco2period.o $(LIB) -lm $(LFITS)
++	$(CC) -o $(BIN)/polyco2period polyco2period.o $(LIB) $(LFITS) -lm
+ 	rm -f polyco2period.o
+ 
+ monitor :
+@@ -449,7 +451,9 @@
+ 	latex sigproc
+ 	dvipdf sigproc
+ 
+-export :
++export2 :
+ 	./exporter.csh
+ 
+ ###############################################################################
++.f.o:
++	$(F77) -c -o $@ $<
+\ No newline at end of file
+diff -Naur sigproc-4.3/makefile.linux sigproc-4.3_new/makefile.linux
+--- sigproc-4.3/makefile.linux	2014-10-11 16:30:47.787141181 +0200
++++ sigproc-4.3_new/makefile.linux	2013-07-27 16:19:53.000000000 +0200
+@@ -1,19 +1,13 @@
+ # makefile.linux - your system-specific makefile for SIGPROC
+-BIN = /data/1/anderson/LOFAR/LuMP/LuMP_2.3_build_test/lump/pulsar/pulsar_local//opt/search/bin
++BIN = $(MYDIR)/opt/search/bin
+ # edit this by hand if you want to change the C compiler options
+-CCC = gcc -O2
++CCC = gcc $(MY_EXTRA_CFLAGS) -fPIC -I$(MYFFTWDIR)/include -I$(MYDIR)/include
++F77=gfortran $(MY_EXTRA_FFLAGS) -fPIC 
++LINK.f=gfortran $(MY_EXTRA_FFLAGS) -fPIC 
+ # The following optional libraries need to be edited by hand...
+-LPGPLOT = -L/data/1/anderson/LOFAR/LuMP/LuMP_2.3_build_test/lump/pulsar/pulsar_local/src/pgplot -lpgplot -lcpgplot -L/usr/X11R6/lib -lX11
+-#LFITS = -L/usr/local/src/cfitsio -lcfitsio
+-#LFFTW = -L/usr/local/lib/ -lfftw3 -lfftw3f
+-F77_LIBS = 
+-SUNLM = 
+-ifneq ($(origin LFITS), undefined)
+-	DFITS = -DPSRFITS
+-endif
+-ifneq ($(origin LFFTW), undefined)
+-	DFFTW = -DFFTW
+-	FFTWF = fftwdata.o
+-else
+-	FFTWF = fftwdummy.o
+-endif
++LPGPLOT = -L$(MYDIR)/src/pgplot -lpgplot -lcpgplot -L$(XLIBDIR) -lX11 -lpng
++LFITS = -L$(MYDIR)/lib64 -lcfitsio
++LFFTW = -L$(MYFFTWDIR)/lib64 -lfftw3 -lfftw3f
++DFITS = -DFITS
++DFFTW = -DFFTW
++FFTWF = fftwdata.o
+diff -Naur sigproc-4.3/mmzap.f sigproc-4.3_new/mmzap.f
+--- sigproc-4.3/mmzap.f	2007-03-12 20:49:19.000000000 +0100
++++ sigproc-4.3_new/mmzap.f	2013-07-27 00:17:41.000000000 +0200
+@@ -52,7 +52,7 @@
+ c     Special sequence 2: f = 50.0*i
+ c
+       k = 1
+-      do ii=1,fnyq/50. - 1
++      do ii=1,INT(fnyq/50.) - 1
+          freq=ii*50.
+          spseqf(2,k)=freq
+          spseqw(2,k)=0.2
+diff -Naur sigproc-4.3/open_file.c sigproc-4.3_new/open_file.c
+--- sigproc-4.3/open_file.c	2003-10-23 15:37:55.000000000 +0200
++++ sigproc-4.3_new/open_file.c	2013-07-27 00:18:10.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <stdio.h>
+ FILE *open_file(char *filename, char *descriptor) /* includefile */
+ {
+diff -Naur sigproc-4.3/phcalc.c sigproc-4.3_new/phcalc.c
+--- sigproc-4.3/phcalc.c	2003-10-23 15:37:55.000000000 +0200
++++ sigproc-4.3_new/phcalc.c	2013-07-27 00:18:38.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <math.h>
+ 
+ /*  Compute pulsar phase and frequency at time mjd0+mjd1/86400.  
+diff -Naur sigproc-4.3/plotpulses.f sigproc-4.3_new/plotpulses.f
+--- sigproc-4.3/plotpulses.f	2008-03-05 17:28:02.000000000 +0100
++++ sigproc-4.3_new/plotpulses.f	2013-07-27 16:22:37.000000000 +0200
+@@ -35,7 +35,8 @@
+      &		    ' (def=all)'
+ 	 write(*,*) 'tmax - maximum time (seconds) to display',
+      &              ' (def=all)'
+-	 write(*,*) 'dmplot - 1 to plot DM and 2 to plot DM channel (def=1)'
++	 write(*,*) 'dmplot - 1 to plot DM and 2 to plot DM channel'//
++     &        ' (def=1)'
+          write(*,*) 'nmax - maximum number of events to plot per DM',
+      &		    ' channel (def=all)'
+          write(*,*) 'allbeams - will do a DM-t stack for all beams',
+@@ -167,7 +168,7 @@
+                mindm=min(dm(i),mindm)
+                maxdm=max(dm(i),maxdm)
+                maxsn=max(sn(i),maxsn)
+-               snhist(sn(i)-thresh)=snhist(sn(i)-thresh)+1
++               snhist(INT(sn(i)-thresh))=snhist(INT(sn(i)-thresh))+1
+             else
+                i=i-1
+             endif
+diff -Naur sigproc-4.3/print_version.c sigproc-4.3_new/print_version.c
+--- sigproc-4.3/print_version.c	2004-08-22 23:06:09.000000000 +0200
++++ sigproc-4.3_new/print_version.c	2013-07-27 00:19:05.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include "version.h"
+ void print_version(char *program, char *argument) /*includefile*/
+ {
+diff -Naur sigproc-4.3/prof_sumc.c sigproc-4.3_new/prof_sumc.c
+--- sigproc-4.3/prof_sumc.c	2003-10-23 15:37:55.000000000 +0200
++++ sigproc-4.3_new/prof_sumc.c	2013-07-27 00:19:32.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ /* collapses nchannels down to a number of sub-bands */
+ #include <stdio.h>
+ void prof_sumc(float *profile, int nbins, int nbands, int *nchans, int nifs, int *ignore) /* includefile */
+diff -Naur sigproc-4.3/pulse.c sigproc-4.3_new/pulse.c
+--- sigproc-4.3/pulse.c	2006-04-10 23:20:17.000000000 +0200
++++ sigproc-4.3_new/pulse.c	2013-07-27 00:21:10.000000000 +0200
+@@ -59,7 +59,7 @@
+   char *file, *file2, *outfile; 
+   FILE *fd;
+ 
+-  scrdsk1[*lsd1]=NULL;
++  scrdsk1[*lsd1]=0;
+ 
+   nover = (int)pow(2.0, (double)(*nsmax+1));
+   if ((overlap=(float *)malloc( sizeof(float)*(unsigned)nover)) == NULL )
+diff -Naur sigproc-4.3/read_aoscan.c sigproc-4.3_new/read_aoscan.c
+--- sigproc-4.3/read_aoscan.c	2006-04-10 23:20:37.000000000 +0200
++++ sigproc-4.3_new/read_aoscan.c	2013-07-27 00:21:56.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ #include <stdio.h>
+ #include <stdlib.h>
+ /* returns day number, year (yyyy), and scan number from an aoscan number */
+diff -Naur sigproc-4.3/read_header.c sigproc-4.3_new/read_header.c
+--- sigproc-4.3/read_header.c	2006-03-08 16:52:38.000000000 +0100
++++ sigproc-4.3_new/read_header.c	2013-07-27 00:22:23.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ /* read_header.c - general handling routines for SIGPROC headers */
+ #include <stdio.h>
+ #include <stdlib.h>
+diff -Naur sigproc-4.3/read_polyco.c sigproc-4.3_new/read_polyco.c
+--- sigproc-4.3/read_polyco.c	2004-08-16 12:23:07.000000000 +0200
++++ sigproc-4.3_new/read_polyco.c	2013-07-27 16:13:53.000000000 +0200
+@@ -4,8 +4,8 @@
+ #include <string.h>
+ #include "sigproc.h"
+ #include "header.h"
+-int poly_override;
+-double override_f0;
++extern int poly_override;
++extern double override_f0;
+ int read_polycoset(FILE *polycofile, struct POLYCO *polyco) /*includefile*/
+ {
+   char coefficient[25];
+diff -Naur sigproc-4.3/seekin.f sigproc-4.3_new/seekin.f
+--- sigproc-4.3/seekin.f	2008-04-08 21:41:42.000000000 +0200
++++ sigproc-4.3_new/seekin.f	2013-07-27 00:35:38.000000000 +0200
+@@ -11,6 +11,7 @@
+       logical dump,rspc,pmzap,mmzap,pulse,app,pzero,fftw,recon,prdh
+       integer oldw
+       real*8 pmax
++      integer f
+ 
+       p2=nint(log10(real(npts))/log10(2.0))
+       narg=iargc()
+@@ -61,7 +62,8 @@
+ 	 write(*,1)'-fftw    - uses FFTW instead of SINGLETON routine'
+ 	 write(*,1)'-hsums   - show harmonic summing used'
+ 	 write(*,1)'-recon   - calculate and report reconstructed S/N'
+-	 write(*,1)'-submn   - mean subtraction (old method) to whiten spectrum'
++	 write(*,1)'-submn   - mean subtraction (old method) to'//
++     &        ' whiten spectrum'
+ 	 write(*,1)'-submd   - median subtraction to whiten spectrum'
+ 	 write(*,1)'-head    - adds header info to output .prd files'
+          write(*,*)
+@@ -75,9 +77,12 @@
+          write(*,1)'-t[tlen] - fix transform length to 2**tlen'
+          write(*,1)'-i[tsec] - ignore tsec seconds of data on reading'
+          write(*,1)'-p[pmax] - set maximum period of seach (def=9.999s)'
+-	 write(*,1)'-T[spth] - set single-pulse search threshold (sigma)'
+-	 write(*,1)'-n[nmax] - maximum number of single-pulse candidates per DM channel'
+-	 write(*,1)'-w[smax] - number of times to smooth time series for single-pulse search'
++	 write(*,1)'-T[spth] - set single-pulse search threshold'//
++     &        ' (sigma)'
++	 write(*,1)'-n[nmax] - maximum number of single-pulse'//
++     &        ' candidates per DM channel'
++	 write(*,1)'-w[smax] - number of times to smooth time series'//
++     &        ' for single-pulse search'
+          write(*,*)
+  1       format(a)
+  2       format(a,i2,a)
+diff -Naur sigproc-4.3/select.c sigproc-4.3_new/select.c
+--- sigproc-4.3/select.c	2004-08-25 18:52:16.000000000 +0200
++++ sigproc-4.3_new/select.c	2013-07-27 00:55:56.000000000 +0200
+@@ -1,6 +1,6 @@
+ #define SWAP(a,b) temp=(a);(a)=(b);(b)=temp;
+ 
+-float select(unsigned long k, unsigned long n, float arr[])
++float fselect(unsigned long k, unsigned long n, float arr[])
+ {
+ 	unsigned long i,ir,j,l,mid;
+ 	float a,temp;
+diff -Naur sigproc-4.3/singlepulse.f sigproc-4.3_new/singlepulse.f
+--- sigproc-4.3/singlepulse.f	2008-04-21 22:33:50.000000000 +0200
++++ sigproc-4.3_new/singlepulse.f	2013-07-27 00:39:49.000000000 +0200
+@@ -9,7 +9,7 @@
+       parameter (maxloopsize=10485760)
+       integer loopsize,lsd1,llog,npulses
+       real realdata(maxloopsize)
+-      character best_pulses*132, hist_pulses*132, scrdisk*80
++      character best_pulses*132, hist_pulses*132, scrdisk*132
+ 
+ c  initialize parameters for single-pulse search and write headerfile
+ 
+@@ -217,14 +217,16 @@
+ 	if (dmidx.eq.0) 
+      .	write (l3,100) isamp,thresh,nsmax,ncandsmax
+ 	do npulse = npulses,npulses-n_to_print+1,-1
+-	   write (l3,200) dm, best_ns(npulse),best_time(npulse),best_snr(npulse)/100.,power
++	   write (l3,200) dm, best_ns(npulse),best_time(npulse),
++     &          best_snr(npulse)/100.,power
+ 	end do
+ 
+ 	write (l4,300) dm, npulses
+ 	close (l3)
+ 	close (l4)
+ 
+- 100	format('tsamp=',i4,' us, thresh= ',f4.1,' sigma, nsmax=',i3,', ncandsmax=',i8)
++ 100	format('tsamp=',i4,' us, thresh= ',f4.1,' sigma, nsmax=',i3,
++     &       ', ncandsmax=',i8)
+  200	format(f9.3,3x,i2,3x,i10,3x,f7.2,3x,i2)
+  300	format(f9.3,3x,i8)
+ 	else 
+@@ -335,7 +337,7 @@
+ 	crr(l)=crr(j)
+ 	crr(j)=c
+         jstack=jstack+2
+-        if(jstack.gt.NSTACK)pause 'NSTACK too small in sort2'
++        if(jstack.gt.NSTACK)stop! 'NSTACK too small in sort2'
+         if(ir-i+1.ge.j-l)then
+           istack(jstack)=ir
+           istack(jstack-1)=i
+diff -Naur sigproc-4.3/sizeof_file.c sigproc-4.3_new/sizeof_file.c
+--- sigproc-4.3/sizeof_file.c	2004-09-01 00:01:30.000000000 +0200
++++ sigproc-4.3_new/sizeof_file.c	2013-07-27 00:46:15.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ /*  ======================================================================  */
+ /*                                                                          */
+ /*  This is to find the size of the file by name "name". The out put is     */
+diff -Naur sigproc-4.3/swap_bytes.c sigproc-4.3_new/swap_bytes.c
+--- sigproc-4.3/swap_bytes.c	2006-01-25 11:58:56.000000000 +0100
++++ sigproc-4.3_new/swap_bytes.c	2013-07-27 00:44:00.000000000 +0200
+@@ -1,3 +1,4 @@
++#include "sigproc.h"
+ /* 
+ 	some useful routines written by Jeff Hagen for swapping
+ 	bytes of data between Big Endian and  Little Endian formats:
+diff -Naur sigproc-4.3/whiten.c sigproc-4.3_new/whiten.c
+--- sigproc-4.3/whiten.c	2005-04-07 11:40:54.000000000 +0200
++++ sigproc-4.3_new/whiten.c	2013-07-27 00:54:42.000000000 +0200
+@@ -1,6 +1,7 @@
++#include <stdlib.h>
+ #include <stdio.h>
+ #include <math.h>
+-float select(unsigned long, unsigned long, float *);
++float fselect(unsigned long, unsigned long, float *);
+ /*
+  Routine to whiten a data stream of length npts by subtracting a running 
+  median so that it has zero mean and then normalizing the data to unit rms.
+@@ -25,7 +26,7 @@
+   for (i=0; i<nsegments; i++) {
+     k=0;
+     for (j=i*nwrk; j<(i+1)*nwrk; j++) work[k++]=data[j];
+-    median[i]=select(nwrk/2,nwrk,work-1);
++    median[i]=fselect(nwrk/2,nwrk,work-1);
+   }
+ 
+   /* subtract running median and sum squares every npts/1024 samples */
+diff -Naur sigproc-4.3/zap_birdies.f sigproc-4.3_new/zap_birdies.f
+--- sigproc-4.3/zap_birdies.f	2007-03-12 20:49:28.000000000 +0100
++++ sigproc-4.3_new/zap_birdies.f	2013-07-27 00:45:53.000000000 +0200
+@@ -122,7 +122,7 @@
+       enddo
+ C 135Hz and 0.0308 sidelobes (covered with one 0.2 Hz filter)
+ 
+-      do ii=1,fnyq4/f1
++      do ii=1,INT(fnyq4/f1)
+          freq = abs(ii*f1)
+          freq = mod(freq,fnyq2)
+ 
+@@ -133,7 +133,7 @@
+       enddo
+ 
+ c 135 Hz, wide sidelobes of f = 135ii
+-      do ii=1,fnyq2/f1
++      do ii=1,INT(fnyq2/f1)
+          freq = abs(ii*f1)
+          freq = mod(freq,fnyq2)
+          if (freq.gt.fnyq) freq=fnyq2-freq
+@@ -150,7 +150,7 @@
+             
+ c     Special sequence 3: f = 50.0*i
+       k = 1
+-      do ii=1,fnyq/50. - 1
++      do ii=1,INT(fnyq/50.) - 1
+          freq=ii*50.
+          spseqf(3,k)=freq
+          spseqw(3,k)=0.1
