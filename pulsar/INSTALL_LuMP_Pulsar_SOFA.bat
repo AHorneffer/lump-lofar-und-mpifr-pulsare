@@ -67,7 +67,7 @@ if [ $BUILD_LUMP_PULSAR_SOFA == 1 ]; then
     # ./t_sofa_f
     #  T_SOFA_F validation successful
     a=`./t_sofa_f`
-    if [ "${a"} == " T_SOFA_F validation successful" ];then
+    if [ "${a}" == " T_SOFA_F validation successful" ];then
         true
     else
         echo "SOFA test failed"
