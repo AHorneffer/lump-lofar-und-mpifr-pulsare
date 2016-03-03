@@ -181,7 +181,7 @@ def main():
     p.add_argument("--clock_speed",default=200,type=int,choices=[200,160],help="Clock speed of station, in MHz.  Defaults to %(default)d")
     p.add_argument("--num_beamlets",default=61,type=int,help="number of beamlets sent to this computer in the beamformed data.  Defaults to %(default)d")
     p.add_argument("--physical_beamlet_offset",type=int,help="*REQUIRED*  beamlet number on the station corresponding to the 0th beamlet received by this computer", required=True)
-    p.add_argument("--station_name",default="Ef",type=str,choices=["Ef", "Uw", "Tb", "Po", "Ju", "Nc", "On", "Cb", "DE601","DE602","DE603","DE604","DE605","FR606","SE607","UK608"],help="LOFAR name of the station dumping data to this writer.  Defaults to %(default)s")
+    p.add_argument("--station_name",default="Ef",type=str,choices=["Ef", "Uw", "Tb", "Po", "Ju", "Nc", "On", "Cb", "Nd", "DE601","DE602","DE603","DE604","DE605","FR606","SE607","UK608","DE609"],help="LOFAR name of the station dumping data to this writer.  Defaults to %(default)s")
     # setup for specific writers
     p.add_argument("--writer_type",action='append',type=int,help="The enum code of the writer type to use.  See LOFAR_Station_Common.h  ", required=True)
     p.add_argument("--filename_base",action='append',type=str,help="*REQUIRED*  The base filename to give to the data", required=True)
