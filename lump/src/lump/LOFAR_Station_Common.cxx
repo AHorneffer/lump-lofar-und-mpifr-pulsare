@@ -182,6 +182,7 @@ LOFAR_STATION_TYPE_ENUM LOFAR_Station_Type_From_Name(const char* const restrict 
            || (strcmp(name,"OnSE607")==0)
            || (strcmp(name,"CbUK608")==0)
            || (strcmp(name,"KjFI609")==0)
+           || (strcmp(name,"NdDE609")==0)
             ) {
         return LOFAR_STATION_TYPE_International;
     }
